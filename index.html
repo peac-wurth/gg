@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WE Org Navigator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.309.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      /* === Wurth Elektronik Design System - Ultra Premium === */
+      /* Backgrounds - richer tonal range */
+      --bg: #090B0F;
+      --surface-0: #0F1319;
+      --surface-1: #161B23;
+      --surface-2: #1D2430;
+      --surface-3: #26303D;
+      --surface-4: #313C4C;
+      --surface-5: #3D495D;
+
+      /* Borders - precision edge lighting */
+      --border-0: rgba(255,255,255,.06);
+      --border-1: rgba(255,255,255,.10);
+      --border-2: rgba(255,255,255,.16);
+      --border-3: rgba(255,255,255,.22);
+
+      /* Typography */
+      --text-0: #FFFFFF;
+      --text-1: #F3F6FA;
+      --text-2: #C0C8D4;
+      --text-3: #8D97A7;
+      --text-4: #697488;
+
+      /* Brand - Wurth Red */
+      --accent: #E3000F;
+      --accent-hover: #FF3441;
+      --accent-dim: rgba(227,0,15,.12);
+      --accent-border: rgba(227,0,15,.40);
+      --accent-glow: rgba(227,0,15,.22);
+      --green: #10B981;
+
+      /* Radii */
+      --r-xs: 6px;
+      --r-sm: 10px;
+      --r-md: 14px;
+      --r-lg: 18px;
+      --r-xl: 22px;
+
+      /* Shadows - deeper, cleaner, higher-end */
+      --shadow-xs: 0 2px 4px rgba(0,0,0,.26);
+      --shadow-sm: 0 4px 10px rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.12);
+      --shadow-md: 0 10px 24px rgba(0,0,0,.24), 0 3px 8px rgba(0,0,0,.14);
+      --shadow-lg: 0 16px 40px rgba(0,0,0,.28), 0 6px 14px rgba(0,0,0,.16);
+      --shadow-xl: 0 24px 70px rgba(0,0,0,.34), 0 10px 24px rgba(0,0,0,.18);
+      --shadow-card: 0 10px 28px rgba(0,0,0,.20), 0 3px 8px rgba(0,0,0,.12);
+      --shadow-card-hover: 0 18px 42px rgba(0,0,0,.26), 0 8px 18px rgba(0,0,0,.14);
+
+      /* Timing */
+      --t-fast: 140ms cubic-bezier(.4,0,.2,1);
+      --t-base: 180ms cubic-bezier(.22,.61,.36,1);
+      --t-slow: 240ms cubic-bezier(.22,.61,.36,1);
+
+      /* Department accents */
+      --dept-executive: #E3000F;
+      --dept-operations: #61A1CC;
+      --dept-finance: #3BAA75;
+      --dept-hr: #DD9460;
+      --dept-it: #6C78FF;
+      --dept-quality: #D4AE22;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Plus Jakarta Sans', 'Inter', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: radial-gradient(circle at 50% 0%, rgba(255,255,255,.03), transparent 24%), linear-gradient(180deg, #0A0D12 0%, var(--bg) 100%); color: var(--text-0); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'; }
+    body { overflow: hidden; }
+    button, input, select { font: inherit; }
+
+    .app { display: flex; flex-direction: column; height: 100vh; }
+
+    /* === HEADER === */
+    .header { display: flex; align-items: center; gap: 16px; padding: 0 24px; height: 56px; border-bottom: 1px solid var(--border-2); background: linear-gradient(180deg, rgba(30,34,42,.98) 0%, rgba(18,21,27,.98) 100%); flex-shrink: 0; z-index: 10; box-shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06); }
+    .header-brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .header-logo { width: 32px; height: 32px; border-radius: var(--r-sm); background: linear-gradient(135deg, #FF2D3A 0%, var(--accent) 40%, #B8000C 100%); display: grid; place-items: center; font-weight: 800; font-size: 10px; color: #fff; letter-spacing: -.03em; box-shadow: 0 3px 12px rgba(227,0,15,.5), 0 0 20px rgba(227,0,15,.15), inset 0 1px 0 rgba(255,255,255,.25); }
+    .header-title { font-size: 15px; font-weight: 700; letter-spacing: -.03em; color: #FFFFFF; text-shadow: 0 1px 2px rgba(0,0,0,.3); }
+    .header-sep { width: 1px; height: 26px; background: linear-gradient(180deg, transparent 0%, var(--border-2) 30%, var(--border-2) 70%, transparent 100%); flex-shrink: 0; }
+    .header-search { position: relative; flex: 1; max-width: 380px; }
+    .header-search .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: var(--text-3); pointer-events: none; display: flex; align-items: center; justify-content: center; }
+    .header-search .search-icon svg { width: 14px; height: 14px; }
+    .header-search input { width: 100%; height: 38px; padding: 0 50px 0 40px; border-radius: var(--r-md); border: 1px solid var(--border-2); background: linear-gradient(180deg, rgba(30,34,40,.96) 0%, rgba(22,25,30,.96) 100%); color: var(--text-0); font-size: 13px; font-weight: 400; outline: none; transition: border-color var(--t-base), box-shadow var(--t-base), background var(--t-base); box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.04), inset 0 2px 4px rgba(0,0,0,.12); }
+    .header-search input::placeholder { color: var(--text-2); font-weight: 400; }
+    .header-search input:focus { border-color: var(--accent-border); box-shadow: 0 0 0 3px var(--accent-dim), inset 0 1px 2px rgba(0,0,0,.1); background: var(--surface-3); }
+    .header-search .shortcut { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); padding: 3px 7px; border-radius: var(--r-xs); border: 1px solid var(--border-2); background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); font-size: 10px; color: var(--text-3); font-weight: 600; pointer-events: none; line-height: 1; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); }
+    .header-stats { display: flex; align-items: center; gap: 18px; margin-left: auto; flex-shrink: 0; }
+    .stat-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--text-1); font-weight: 500; letter-spacing: .02em; }
+    .stat-item .val { font-weight: 700; color: #FFFFFF; font-variant-numeric: tabular-nums; text-shadow: 0 0 8px rgba(255,255,255,.1); }
+    .stat-item i { width: 13px; height: 13px; color: var(--text-3); }
+    .header-dot { width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle, #34D399 0%, var(--green) 100%); flex-shrink: 0; box-shadow: 0 0 8px rgba(16,185,129,.5), 0 0 16px rgba(16,185,129,.2); }
+    .header-refresh { width: 32px; height: 32px; border-radius: var(--r-md); border: 1px solid var(--border-2); background: linear-gradient(180deg, rgba(40,45,54,.95) 0%, rgba(28,31,37,.95) 100%); color: var(--text-2); cursor: pointer; display: grid; place-items: center; transition: all var(--t-fast); flex-shrink: 0; box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.06); }
+    .header-refresh:hover { background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); color: var(--text-0); border-color: var(--border-2); }
+    .header-refresh.spinning svg { animation: spin .6s linear; }
+    .header-refresh svg { width: 13px; height: 13px; }
+
+    /* === TOOLBAR === */
+    .toolbar { display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-bottom: 1px solid var(--border-1); background: linear-gradient(180deg, rgba(24,27,33,.97) 0%, rgba(17,20,24,.97) 100%); flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.03); }
+    .nav-tabs { display: flex; gap: 0; border-radius: var(--r-md); border: 1px solid var(--border-2); background: linear-gradient(180deg, rgba(33,37,44,.9) 0%, rgba(22,25,30,.9) 100%); overflow: hidden; flex-shrink: 0; box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.05); }
+    .nav-tab { display: flex; align-items: center; gap: 7px; padding: 8px 16px; border: none; background: transparent; color: var(--text-2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all var(--t-fast); letter-spacing: -.01em; }
+    .nav-tab:not(:last-child) { border-right: 1px solid var(--border-0); }
+    .nav-tab:hover { color: var(--text-0); background: rgba(255,255,255,.06); }
+    .nav-tab.active { background: linear-gradient(180deg, #FF1A28 0%, var(--accent) 100%); color: #fff; box-shadow: 0 2px 8px rgba(227,0,15,.35), inset 0 1px 0 rgba(255,255,255,.15); }
+    .nav-tab i { width: 13px; height: 13px; }
+    .toolbar-sep { width: 1px; height: 24px; background: linear-gradient(180deg, transparent 0%, var(--border-2) 30%, var(--border-2) 70%, transparent 100%); flex-shrink: 0; }
+    .toolbar-spacer { flex: 1; }
+
+    /* Custom Dropdown - glossy enterprise */
+    .dropdown-wrap { position: relative; }
+    .dropdown-trigger { display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 32px 0 14px; border-radius: var(--r-md); border: 1px solid var(--border-2); background: linear-gradient(180deg, rgba(40,45,54,.95) 0%, rgba(28,31,37,.95) 100%); color: var(--text-0); font-size: 12px; font-weight: 500; cursor: pointer; transition: all var(--t-base); white-space: nowrap; position: relative; user-select: none; box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.06); }
+    .dropdown-trigger::after { content: ''; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 0; height: 0; border-left: 3.5px solid transparent; border-right: 3.5px solid transparent; border-top: 4.5px solid var(--text-3); transition: transform var(--t-base); }
+    .dropdown-trigger:hover { border-color: var(--border-2); background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); color: var(--text-0); }
+    .dropdown-trigger.open { border-color: var(--accent-border); box-shadow: 0 0 0 2px var(--accent-dim), var(--shadow-xs); }
+    .dropdown-trigger.open::after { transform: translateY(-50%) rotate(180deg); }
+    .dropdown-menu { position: absolute; top: calc(100% + 8px); left: 0; min-width: calc(100% + 28px); max-height: 300px; overflow-y: auto; border-radius: var(--r-lg); border: 1px solid rgba(227,0,15,.22); background: linear-gradient(180deg, rgba(37,43,54,.98) 0%, rgba(24,28,35,.98) 100%); box-shadow: 0 18px 50px rgba(0,0,0,.42), 0 0 0 1px rgba(255,255,255,.04), inset 0 1px 0 rgba(255,255,255,.08); z-index: 50; opacity: 0; visibility: hidden; transform: translateY(-4px) scale(.985); transition: all var(--t-base); padding: 8px; backdrop-filter: saturate(120%); -webkit-backdrop-filter: saturate(120%); }
+    .dropdown-menu.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+    .dropdown-option { display: flex; align-items: center; gap: 10px; padding: 11px 13px; border-radius: var(--r-md); font-size: 12px; font-weight: 600; color: var(--text-1); cursor: pointer; transition: all var(--t-fast); }
+    .dropdown-option:hover { background: linear-gradient(180deg, rgba(255,255,255,.06) 0%, rgba(255,255,255,.035) 100%); color: #FFFFFF; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+    .dropdown-option.active { background: linear-gradient(180deg, rgba(227,0,15,.18) 0%, rgba(227,0,15,.10) 100%); color: #FFFFFF; font-weight: 700; box-shadow: 0 0 0 1px rgba(227,0,15,.22), inset 0 1px 0 rgba(255,255,255,.07); }
+    .dropdown-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; opacity: .95; box-shadow: 0 0 8px currentColor; }
+    .filter-clear { height: 32px; padding: 0 12px; border-radius: var(--r-sm); border: 1px solid var(--border-1); background: linear-gradient(180deg, rgba(33,37,44,.6) 0%, rgba(22,25,30,.6) 100%); color: var(--text-3); font-size: 11px; font-weight: 600; cursor: pointer; transition: all var(--t-fast); text-transform: uppercase; letter-spacing: .05em; box-shadow: inset 0 1px 0 rgba(255,255,255,.03); }
+    .filter-clear:hover { color: var(--text-0); border-color: var(--border-2); background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); box-shadow: var(--shadow-xs), inset 0 1px 0 rgba(255,255,255,.05); }
+
+    /* === MAIN === */
+    .main { flex: 1; position: relative; overflow: hidden; }
+    .view { position: absolute; inset: 0; display: none; }
+    .view.active { display: block; }
+
+    /* --- Card View --- */
+    .card-view { overflow-y: auto; padding: 28px 28px 56px; background: var(--bg); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px; max-width: 1520px; margin: 0 auto; }
+    .card { background: linear-gradient(180deg, rgba(28,31,37,.98) 0%, rgba(22,25,30,.95) 100%); border: 1px solid var(--border-1); border-top: 1px solid var(--border-2); border-left: 3px solid var(--accent); border-radius: var(--r-lg); padding: 20px 20px 18px; box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.1); cursor: pointer; transition: transform 180ms cubic-bezier(.22,.61,.36,1), box-shadow 180ms cubic-bezier(.22,.61,.36,1), border-color 180ms cubic-bezier(.22,.61,.36,1); position: relative; }
+    .card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--shadow-card-hover), inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px var(--accent-glow); border-color: var(--border-2); }
+    .card.selected { border-color: var(--accent-border); box-shadow: var(--shadow-card-hover), 0 0 0 1px var(--accent-border), 0 0 20px rgba(227,0,15,.08); }
+    .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+    .person { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .avatar { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-weight: 600; font-size: 15px; flex-shrink: 0; overflow: hidden; color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.14); transition: transform 180ms ease, box-shadow 180ms ease; }
+    .avatar:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16); }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .name { font-size: 15px; font-weight: 600; letter-spacing: -.02em; line-height: 1.3; color: var(--text-0); }
+    .title { margin-top: 3px; font-size: 12px; color: var(--text-2); line-height: 1.3; font-weight: 500; }
+    .level-badge { padding: 4px 9px; border-radius: 999px; background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); border: 1px solid var(--border-1); color: var(--text-2); font-size: 10px; font-weight: 600; flex-shrink: 0; letter-spacing: .02em; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+    .details { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .detail { display: flex; align-items: center; gap: 7px; padding: 8px 10px; border-radius: var(--r-sm); background: linear-gradient(180deg, var(--surface-2) 0%, rgba(27,30,36,.8) 100%); color: var(--text-2); font-size: 11px; overflow: hidden; font-weight: 400; border: 1px solid var(--border-0); box-shadow: inset 0 1px 0 rgba(255,255,255,.02); }
+    .detail i { flex-shrink: 0; width: 12px; height: 12px; color: var(--text-3); }
+    .detail span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .card-foot { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-0); display: flex; justify-content: space-between; align-items: center; }
+    .dept-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 999px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .dept-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 4px currentColor; }
+    .reports-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; color: var(--text-3); }
+    .reports-badge i { width: 11px; height: 11px; }
+
+    /* --- Tree View --- */
+    .tree-view { overflow: hidden; background: var(--bg); }
+    .tree-view::before { content: none; }
+    .tree-view::after { content: none; }
+    .tree-controls { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 2px; padding: 5px; border-radius: var(--r-md); border: 1px solid var(--border-1); background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%); box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.05); z-index: 5; }
+    .tree-btn { height: 30px; padding: 0 11px; border-radius: var(--r-xs); border: none; background: transparent; color: var(--text-2); font-size: 11px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 5px; transition: all var(--t-fast); }
+    .tree-btn:hover { background: rgba(255,255,255,.06); color: var(--text-0); }
+    .tree-btn.active { background: linear-gradient(180deg, #FF1A28 0%, var(--accent) 100%); color: #fff; box-shadow: 0 2px 8px rgba(227,0,15,.35), inset 0 1px 0 rgba(255,255,255,.15); }
+    .tree-btn i { width: 13px; height: 13px; }
+    .tree-btn-sep { width: 1px; height: 18px; background: var(--border-1); margin: 0 2px; }
+    .tree-stage { position: absolute; inset: 0; overflow: hidden; cursor: grab; user-select: none; z-index: 1; }
+    .tree-stage.dragging { cursor: grabbing; }
+    #orgChart { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+
+    /* Tree Nodes - glossy premium panels */
+    .tree-node { position: absolute; width: 200px; padding: 12px 14px; border-radius: var(--r-md); border: 1px solid var(--border-1); border-top: 1px solid var(--border-2); border-left: 3px solid var(--border-1); background: linear-gradient(180deg, rgba(28,31,37,.98) 0%, rgba(22,25,30,.95) 100%); box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255,255,255,.06); cursor: pointer; transition: transform 180ms cubic-bezier(.22,.61,.36,1), box-shadow 180ms cubic-bezier(.22,.61,.36,1), border-color 180ms cubic-bezier(.22,.61,.36,1); }
+    .tree-node:hover { border-color: var(--border-3); box-shadow: var(--shadow-card-hover), inset 0 1px 0 rgba(255,255,255,.08); transform: translateY(-2px); }
+    .tree-node.selected { border-color: var(--accent-border); border-left-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-dim), var(--shadow-md), 0 0 16px rgba(227,0,15,.06); }
+    .tree-node.highlighted { border-left-color: var(--accent); }
+    .tree-node-head { display: flex; align-items: center; gap: 9px; }
+    .tree-node-avatar { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #fff; flex-shrink: 0; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.14); transition: transform 180ms ease, box-shadow 180ms ease; }
+    .tree-node:hover .tree-node-avatar { transform: translateY(-2px) scale(1.03); box-shadow: 0 10px 24px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.16); }
+    .tree-node-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tree-node-name { font-size: 12px; font-weight: 600; color: var(--text-0); line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: -.01em; }
+    .tree-node-title { font-size: 10px; color: var(--text-2); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; }
+    .tree-node-dept { margin-top: 8px; display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 500; color: var(--text-3); letter-spacing: .01em; }
+    .tree-node-dept .dept-dot { width: 6px; height: 6px; box-shadow: 0 0 4px currentColor; }
+    .tree-toggle { position: absolute; bottom: -11px; left: 50%; transform: translateX(-50%); width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-2); background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); color: var(--text-2); font-size: 12px; font-weight: 600; display: grid; place-items: center; cursor: pointer; z-index: 2; transition: all var(--t-fast); line-height: 1; box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.06); }
+    .tree-toggle:hover { background: linear-gradient(180deg, #FF1A28 0%, var(--accent) 100%); color: #fff; border-color: var(--accent); box-shadow: 0 2px 10px rgba(227,0,15,.4), inset 0 1px 0 rgba(255,255,255,.15); }
+
+    /* SVG Connectors - crisp anti-aliased */
+    .tree-connectors { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+    .tree-connectors path { fill: none; stroke: rgba(255,255,255,.1); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke var(--t-base), stroke-width var(--t-base); }
+    .tree-connectors path.highlight { stroke: var(--accent); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(227,0,15,.25)); }
+
+    /* Legend - solid glossy panel */
+    .tree-legend { position: absolute; top: 14px; right: 14px; padding: 16px; border-radius: var(--r-md); border: 1px solid var(--border-1); border-top: 1px solid var(--border-2); background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%); box-shadow: var(--shadow-xl), inset 0 1px 0 rgba(255,255,255,.05); z-index: 5; display: none; }
+    .tree-legend.open { display: block; }
+    .tree-legend-title { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .14em; color: #8FA0B8; margin-bottom: 12px; }
+    .tree-legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-2); margin-top: 7px; font-weight: 500; }
+    .tree-legend-swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 4px currentColor; }
+
+    /* --- Detail Panel --- */
+    .panel-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.65); opacity: 0; visibility: hidden; transition: all var(--t-slow); z-index: 100; }
+    .panel-overlay.open { opacity: 1; visibility: visible; }
+    .panel { position: fixed; top: 0; right: 0; width: 420px; max-width: 90vw; height: 100vh; background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%); border-left: 1px solid var(--border-1); transform: translateX(100%); transition: transform .32s cubic-bezier(.32,.72,0,1); z-index: 101; overflow-y: auto; box-shadow: -10px 0 50px rgba(0,0,0,.6), inset 1px 0 0 rgba(255,255,255,.04); }
+    .panel.open { transform: translateX(0); }
+    .panel-head { padding: 24px 22px; border-bottom: 1px solid var(--border-0); display: flex; justify-content: space-between; align-items: flex-start; }
+    .panel-prof { display: flex; align-items: center; gap: 14px; }
+    .panel-avatar { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-weight: 600; font-size: 15px; color: #fff; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.14); transition: transform 180ms ease, box-shadow 180ms ease; }
+    .panel-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .panel-name { font-size: 18px; font-weight: 700; letter-spacing: -.03em; color: #FFFFFF; }
+    .panel-title { margin-top: 4px; font-size: 13px; color: var(--text-2); font-weight: 500; }
+    .panel-close { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border-1); background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%); color: var(--text-2); cursor: pointer; display: grid; place-items: center; font-size: 14px; transition: all var(--t-fast); box-shadow: var(--shadow-xs), inset 0 1px 0 rgba(255,255,255,.04); }
+    .panel-close:hover { background: linear-gradient(180deg, var(--surface-4) 0%, var(--surface-3) 100%); color: var(--text-0); border-color: var(--border-2); }
+    .panel-body { padding: 20px 22px 36px; display: flex; flex-direction: column; gap: 16px; }
+    .sec { padding: 16px; border-radius: var(--r-md); border: 1px solid var(--border-0); border-top: 1px solid var(--border-1); background: linear-gradient(180deg, rgba(28,31,37,.6) 0%, rgba(22,25,30,.4) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.03); }
+    .sec h3 { margin-bottom: 12px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #8FA0B8; font-weight: 800; }
+    .info-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-0); }
+    .info-row:last-child { border-bottom: 0; }
+    .info-icon { width: 30px; height: 30px; border-radius: var(--r-sm); display: grid; place-items: center; background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%); border: 1px solid var(--border-0); color: var(--text-3); flex-shrink: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.03); }
+    .info-icon i { width: 12px; height: 12px; }
+    .info-label { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+    .info-value { font-size: 12px; font-weight: 500; color: var(--text-1); margin-top: 2px; }
+    .info-value a { color: #7CABF0; text-decoration: none; font-weight: 500; }
+    .info-value a:hover { text-decoration: underline; }
+    .chain { display: flex; flex-direction: column; gap: 6px; }
+    .chain-item { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border-radius: var(--r-sm); border: 1px solid var(--border-0); background: linear-gradient(180deg, var(--surface-2) 0%, var(--surface-1) 100%); cursor: pointer; transition: all var(--t-fast); box-shadow: inset 0 1px 0 rgba(255,255,255,.02); }
+    .chain-item:hover { border-color: var(--accent-border); background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%); box-shadow: 0 0 12px rgba(227,0,15,.05), inset 0 1px 0 rgba(255,255,255,.03); }
+    .chain-avatar { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; font-size: 11px; font-weight: 600; color: #fff; flex-shrink: 0; box-shadow: 0 5px 14px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.12); transition: transform 180ms ease, box-shadow 180ms ease; }
+    .chain-item:hover .chain-avatar { transform: translateY(-2px) scale(1.03); box-shadow: 0 9px 20px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.14); }
+    .chain-name { font-size: 12px; font-weight: 700; color: var(--text-0); }
+    .chain-title { font-size: 10px; color: var(--text-2); font-weight: 500; }
+    .org-path { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+    .org-path-item { font-size: 11px; font-weight: 700; color: var(--text-1); padding: 6px 11px; border-radius: var(--r-md); background: linear-gradient(180deg, rgba(39,45,56,.92) 0%, rgba(24,28,35,.92) 100%); border: 1px solid var(--border-1); cursor: pointer; transition: all var(--t-fast); box-shadow: 0 4px 12px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.05); }
+    .org-path-item:hover { border-color: var(--accent-border); color: #FFFFFF; box-shadow: 0 8px 20px rgba(0,0,0,.22), 0 0 0 1px rgba(227,0,15,.12), inset 0 1px 0 rgba(255,255,255,.06); }
+    .org-path-item.current { background: linear-gradient(180deg, rgba(255,38,49,.96) 0%, rgba(227,0,15,.96) 100%); border-color: rgba(255,80,90,.55); color: #FFFFFF; font-weight: 800; box-shadow: 0 10px 24px rgba(227,0,15,.22), inset 0 1px 0 rgba(255,255,255,.14); }
+    .org-path-sep { font-size: 11px; color: var(--text-3); }
+
+    /* --- Loading --- */
+    .loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--bg); z-index: 40; }
+    .loading.hidden { display: none; }
+    .spinner { width: 26px; height: 26px; border: 2px solid var(--border-1); border-top-color: var(--accent); border-radius: 50%; animation: spin .6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 12px; color: var(--text-2); font-weight: 500; }
+
+    /* --- Responsive --- */
+    @media (max-width: 1100px) { .header-stats { display: none; } }
+    @media (max-width: 768px) { .header { padding: 0 14px; } .toolbar { padding: 10px 14px; flex-wrap: wrap; } .card-view { padding: 16px; } .grid { grid-template-columns: 1fr; } .panel { width: 100vw; max-width: 100vw; } }
+
+    /* --- Scrollbar --- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.16); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-brand">
+        <div class="header-logo">WE</div>
+        <div class="header-title">WE Org Navigator</div>
+      </div>
+      <div class="header-sep"></div>
+      <div class="header-search">
+        <span class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+        <input id="searchInput" type="text" placeholder="Search people, roles, departments..." />
+        <span class="shortcut">/</span>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item"><i data-lucide="users"></i><span class="val" id="statTotal">0</span> people</div>
+        <div class="stat-item"><i data-lucide="building-2"></i><span class="val" id="statDepts">0</span> depts</div>
+        <div class="stat-item"><i data-lucide="map-pin"></i><span class="val" id="statLocs">0</span> locations</div>
+        <div class="stat-item"><i data-lucide="layers-3"></i><span class="val" id="statLevels">0</span> levels</div>
+        <div class="header-dot"></div>
+        <button class="header-refresh" id="btnRefresh" title="Refresh data from CSV"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></button>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="nav-tabs">
+        <button class="nav-tab active" id="btnTree"><i data-lucide="git-branch"></i>Tree</button>
+        <button class="nav-tab" id="btnCard"><i data-lucide="layout-grid"></i>Cards</button>
+      </div>
+      <div class="toolbar-sep"></div>
+      <div class="dropdown-wrap" id="deptDropdown">
+        <div class="dropdown-trigger" id="deptTrigger">All Departments</div>
+        <div class="dropdown-menu" id="deptMenu"></div>
+      </div>
+      <div class="dropdown-wrap" id="locDropdown">
+        <div class="dropdown-trigger" id="locTrigger">All Locations</div>
+        <div class="dropdown-menu" id="locMenu"></div>
+      </div>
+      <div class="dropdown-wrap" id="levelDropdown">
+        <div class="dropdown-trigger" id="levelTrigger">All Levels</div>
+        <div class="dropdown-menu" id="levelMenu"></div>
+      </div>
+      <button class="filter-clear" id="btnClear">Clear</button>
+      <div class="toolbar-spacer"></div>
+    </div>
+
+    <div class="main">
+      <div class="view tree-view active" id="treeView">
+        <div class="tree-stage" id="treeStage">
+          <svg class="tree-connectors" id="treeConnectors"></svg>
+          <div id="orgChart"></div>
+        </div>
+        <div class="tree-controls">
+          <button class="tree-btn" id="btnZoomOut"><i data-lucide="minus"></i></button>
+          <button class="tree-btn" id="scaleBadge" style="min-width:44px;cursor:default;font-variant-numeric:tabular-nums;">100%</button>
+          <button class="tree-btn" id="btnZoomIn"><i data-lucide="plus"></i></button>
+          <div class="tree-btn-sep"></div>
+          <button class="tree-btn" id="btnFit"><i data-lucide="maximize-2"></i>Fit</button>
+          <button class="tree-btn" id="btnExpand"><i data-lucide="unfold-vertical"></i>Expand</button>
+          <button class="tree-btn" id="btnCollapse"><i data-lucide="fold-vertical"></i>Collapse</button>
+          <div class="tree-btn-sep"></div>
+          <button class="tree-btn" id="btnLegend"><i data-lucide="palette"></i>Legend</button>
+        </div>
+        <div class="tree-legend" id="treeLegend"></div>
+      </div>
+      <div class="view card-view" id="cardView">
+        <div class="grid" id="cardGrid"></div>
+      </div>
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading organization data...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-overlay" id="panelOverlay"></div>
+  <aside class="panel" id="panel">
+    <div class="panel-head">
+      <div class="panel-prof">
+        <div class="panel-avatar" id="panelAvatar">WE</div>
+        <div>
+          <div class="panel-name" id="panelName">-</div>
+          <div class="panel-title" id="panelTitle">-</div>
+        </div>
+      </div>
+      <button class="panel-close" id="panelClose">&times;</button>
+    </div>
+    <div class="panel-body">
+      <div class="sec"><h3>Contact</h3><div id="panelContact"></div></div>
+      <div class="sec"><h3>Reports To</h3><div class="chain" id="panelReportsTo"></div></div>
+      <div class="sec"><h3>Direct Reports</h3><div class="chain" id="panelDirectReports"></div></div>
+      <div class="sec"><h3>Organization Path</h3><div class="org-path" id="panelOrgPath"></div></div>
+    </div>
+  </aside>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════
+       WE ORG NAVIGATOR — FULL DATA-DRIVEN APPLICATION
+       CSV is the single source of truth.
+    ═══════════════════════════════════════════════════════════ */
+
+    const CSV_URL = './employees.csv';
+
+    // Full 50-employee dataset embedded as fallback
+    const INLINE_CSV = `Title,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
+CEO - Group,E001,Chief Executive Officer,Executive,ceo@company.com,+49 711 555 0100,HQ - Germany,,
+COO - Operations,E002,Chief Operating Officer,Operations,coo@company.com,+49 711 555 0101,HQ - Germany,E001,
+CFO - Finance,E003,Chief Financial Officer,Finance,cfo@company.com,+49 711 555 0102,HQ - Germany,E001,
+CHRO - People,E004,Chief Human Resources Officer,HR,chro@company.com,+49 711 555 0103,HQ - Germany,E001,
+CTO - Technology,E005,Chief Technology Officer,IT,cto@company.com,+49 711 555 0104,HQ - Germany,E001,
+VP Manufacturing,E006,Vice President Manufacturing,Operations,vp.manufacturing@company.com,+49 711 555 0105,Plant - Germany,E002,
+VP Supply Chain,E007,Vice President Supply Chain,Operations,vp.supplychain@company.com,+49 711 555 0106,HQ - Germany,E002,
+VP Quality,E008,Vice President Quality,Quality,vp.quality@company.com,+49 711 555 0107,Plant - Germany,E002,
+Finance Director EMEA,E009,Finance Director EMEA,Finance,finance.emea@company.com,+49 711 555 0108,HQ - Germany,E003,
+Controller Director,E010,Director Controlling,Finance,controller@company.com,+49 711 555 0109,HQ - Germany,E003,
+HR Director,E011,HR Director,HR,hr.director@company.com,+49 711 555 0110,HQ - Germany,E004,
+Talent Acquisition Lead,E012,Talent Acquisition Lead,HR,talent@company.com,+49 711 555 0111,HQ - Germany,E004,
+IT Infrastructure Director,E013,Director Infrastructure,IT,infra.director@company.com,+49 711 555 0112,HQ - Germany,E005,
+Applications Director,E014,Director Business Applications,IT,apps.director@company.com,+49 711 555 0113,HQ - Germany,E005,
+Plant Manager A,E015,Plant Manager,Operations,plant.a@company.com,+49 711 555 0114,Plant A,E006,
+Plant Manager B,E016,Plant Manager,Operations,plant.b@company.com,+49 711 555 0115,Plant B,E006,
+Production Supervisor A1,E017,Production Supervisor,Operations,prod.a1@company.com,+49 711 555 0116,Plant A,E015,
+Production Supervisor A2,E018,Production Supervisor,Operations,prod.a2@company.com,+49 711 555 0117,Plant A,E015,
+Production Supervisor B1,E019,Production Supervisor,Operations,prod.b1@company.com,+49 711 555 0118,Plant B,E016,
+Production Supervisor B2,E020,Production Supervisor,Operations,prod.b2@company.com,+49 711 555 0119,Plant B,E016,
+Supply Chain Director,E021,Supply Chain Director,Operations,sc.director@company.com,+49 711 555 0120,HQ - Germany,E007,
+Logistics Manager,E022,Logistics Manager,Operations,logistics@company.com,+49 711 555 0121,Warehouse - Germany,E021,
+Procurement Manager,E023,Procurement Manager,Operations,procurement@company.com,+49 711 555 0122,HQ - Germany,E021,
+Warehouse Supervisor,E024,Warehouse Supervisor,Operations,warehouse.sup@company.com,+49 711 555 0123,Warehouse - Germany,E022,
+Quality Director,E025,Quality Director,Quality,quality.director@company.com,+49 711 555 0124,Plant - Germany,E008,
+Quality Manager Plant A,E026,Quality Manager,Quality,qa.planta@company.com,+49 711 555 0125,Plant A,E025,
+Quality Manager Plant B,E027,Quality Manager,Quality,qa.plantb@company.com,+49 711 555 0126,Plant B,E025,
+Senior Financial Analyst,E028,Senior Financial Analyst,Finance,fin.analyst1@company.com,+49 711 555 0127,HQ - Germany,E009,
+Regional Controller,E029,Regional Controller,Finance,regional.controller@company.com,+49 711 555 0128,France Office,E010,
+Accounts Payable Lead,E030,Accounts Payable Lead,Finance,ap.lead@company.com,+49 711 555 0129,HQ - Germany,E010,
+HR Business Partner Ops,E031,HR Business Partner,HR,hrbp.ops@company.com,+49 711 555 0130,Plant A,E011,
+HR Business Partner Corp,E032,HR Business Partner,HR,hrbp.corp@company.com,+49 711 555 0131,HQ - Germany,E011,
+Recruiter 1,E033,Recruiter,HR,recruiter1@company.com,+49 711 555 0132,HQ - Germany,E012,
+Recruiter 2,E034,Recruiter,HR,recruiter2@company.com,+49 711 555 0133,Poland Office,E012,
+Infrastructure Manager,E035,Infrastructure Manager,IT,infra.manager@company.com,+49 711 555 0134,HQ - Germany,E013,
+Security Lead,E036,IT Security Lead,IT,security.lead@company.com,+49 711 555 0135,HQ - Germany,E013,
+ERP Manager,E037,ERP Manager,IT,erp.manager@company.com,+49 711 555 0136,HQ - Germany,E014,
+CRM Manager,E038,CRM Manager,IT,crm.manager@company.com,+49 711 555 0137,USA Office,E014,
+Assembly Operator A1,E039,Assembly Operator,Operations,assembly.a1@company.com,+49 711 555 0138,Plant A,E017,
+Assembly Operator A2,E040,Assembly Operator,Operations,assembly.a2@company.com,+49 711 555 0139,Plant A,E017,
+Assembly Operator B1,E041,Assembly Operator,Operations,assembly.b1@company.com,+49 711 555 0140,Plant B,E019,
+Assembly Operator B2,E042,Assembly Operator,Operations,assembly.b2@company.com,+49 711 555 0141,Plant B,E020,
+Forklift Operator,E043,Forklift Operator,Operations,forklift@company.com,+49 711 555 0142,Warehouse - Germany,E024,
+Quality Engineer A,E044,Quality Engineer,Quality,qe.a@company.com,+49 711 555 0143,Plant A,E026,
+Quality Engineer B,E045,Quality Engineer,Quality,qe.b@company.com,+49 711 555 0144,Plant B,E027,
+AP Specialist,E046,Accounts Payable Specialist,Finance,ap.specialist@company.com,+49 711 555 0145,HQ - Germany,E030,
+FP&A Analyst,E047,FP&A Analyst,Finance,fpa.analyst@company.com,+49 711 555 0146,HQ - Germany,E028,
+Systems Administrator,E048,Systems Administrator,IT,sysadmin@company.com,+49 711 555 0147,HQ - Germany,E035,
+Security Analyst,E049,Security Analyst,IT,security.analyst@company.com,+49 711 555 0148,HQ - Germany,E036,
+Recruiting Coordinator,E050,Recruiting Coordinator,HR,recruiting.coordinator@company.com,+49 711 555 0149,HQ - Germany,E033,`;
+
+    // ─── State ───
+    let employees = [];
+    let employeeMap = new Map();
+    let childrenMap = new Map();
+    let filteredEmployees = [];
+    let currentView = 'tree';
+    let activeDept = 'all';
+    let activeLocation = 'all';
+    let activeLevel = 'all';
+    let searchQuery = '';
+    let selectedEmployee = null;
+    let collapsedNodes = new Set();
+    let highlightedChain = new Set();
+    let treePan = { x: 0, y: 0, scale: 1 };
+    let legendOpen = false;
+
+    const NODE_W = 200;
+    const NODE_H = 80;
+    const H_GAP = 24;
+    const V_GAP = 60;
+
+    const DEPT_COLORS = {
+      'Executive': '#E3000F',
+      'Operations': '#5B8DB8',
+      'Finance': '#3D9970',
+      'HR': '#D4915C',
+      'IT': '#6366F1',
+      'Quality': '#B8960B'
+    };
+    function getDeptColor(dept) { return DEPT_COLORS[dept] || '#5B8DB8'; }
+
+    // ─── CSV Parsing ───
+    function parseCsvLine(line) {
+      const result = []; let current = ''; let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        if (ch === '"') { if (inQuotes && line[i+1] === '"') { current += '"'; i++; } else { inQuotes = !inQuotes; } }
+        else if (ch === ',' && !inQuotes) { result.push(current); current = ''; }
+        else { current += ch; }
+      }
+      result.push(current);
+      return result.map(v => v.trim());
+    }
+
+    function parseCsv(text) {
+      const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/).filter(Boolean);
+      if (!lines.length) throw new Error('Empty CSV');
+      const headers = parseCsvLine(lines[0]);
+      return lines.slice(1).map(line => {
+        const vals = parseCsvLine(line);
+        const obj = {};
+        headers.forEach((h, i) => obj[h] = vals[i] || '');
+        return obj;
+      });
+    }
+
+    // ─── Data Loading ───
+    async function fetchEmployees() {
+      let text = '';
+      try {
+        const res = await fetch(CSV_URL + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        text = await res.text();
+      } catch(e) { text = INLINE_CSV; }
+      if (!text || !text.trim()) text = INLINE_CSV;
+      const rows = parseCsv(text);
+      const mapped = rows.map(r => ({
+        id: r.EmployeeID || '',
+        name: r.Title || 'Unknown',
+        jobTitle: r.JobTitle || '',
+        department: r.Department || 'General',
+        email: r.Email || '',
+        phone: r.Phone || '',
+        office: r.OfficeLocation || '',
+        managerId: r.ManagerID || '',
+        photoUrl: r.PhotoUrl || ''
+      })).filter(r => r.id && r.name);
+      const seen = new Set(); const deduped = [];
+      mapped.forEach(r => { if (!seen.has(r.id)) { seen.add(r.id); deduped.push(r); } });
+      return deduped;
+    }
+
+    // ─── Hierarchy ───
+    function buildHierarchy(data) {
+      employeeMap = new Map();
+      childrenMap = new Map();
+      data.forEach(e => { employeeMap.set(e.id, e); childrenMap.set(e.id, []); });
+      data.forEach(e => {
+        if (e.managerId && employeeMap.has(e.managerId)) {
+          childrenMap.get(e.managerId).push(e.id);
+        }
+      });
+      // Derive levels via BFS
+      const roots = data.filter(e => !e.managerId || !employeeMap.has(e.managerId));
+      const queue = roots.map(r => ({ id: r.id, level: 1 }));
+      const visited = new Set();
+      while (queue.length) {
+        const { id, level } = queue.shift();
+        if (visited.has(id)) continue;
+        visited.add(id);
+        employeeMap.get(id).level = level;
+        (childrenMap.get(id) || []).forEach(cid => queue.push({ id: cid, level: level + 1 }));
+      }
+      data.forEach(e => { if (!e.level) e.level = 1; });
+    }
+
+    function getRoots() { return employees.filter(e => !e.managerId || !employeeMap.has(e.managerId)); }
+
+    function getVisibleChildren(id) {
+      if (collapsedNodes.has(id)) return [];
+      return (childrenMap.get(id) || []).map(cid => employeeMap.get(cid)).filter(e => filteredEmployees.includes(e));
+    }
+
+    function getOrgPath(emp) {
+      const path = [emp];
+      let cur = emp;
+      while (cur.managerId && employeeMap.has(cur.managerId)) {
+        cur = employeeMap.get(cur.managerId);
+        path.unshift(cur);
+      }
+      return path;
+    }
+
+    function countDirectReports(id) { return employees.filter(e => e.managerId === id).length; }
+
+    function countTeamBelow(id, visited) {
+      if (!visited) visited = new Set();
+      if (!id || visited.has(id)) return 0;
+      visited.add(id);
+      const kids = employees.filter(e => e.managerId === id && !visited.has(e.id));
+      let count = kids.length;
+      kids.forEach(k => { count += countTeamBelow(k.id, new Set(visited)); });
+      return count;
+    }
+
+    // ─── Tree Layout ───
+    function layoutTree() {
+      const roots = getRoots().filter(e => filteredEmployees.includes(e));
+      if (!roots.length) return { positions: new Map(), width: 0, height: 0 };
+
+      const positions = new Map();
+
+      function getSubtreeWidth(id) {
+        const children = getVisibleChildren(id);
+        if (!children.length) return NODE_W;
+        const childWidths = children.map(c => getSubtreeWidth(c.id));
+        const total = childWidths.reduce((a, b) => a + b, 0) + (children.length - 1) * H_GAP;
+        return Math.max(NODE_W, total);
+      }
+
+      function positionNode(id, x, y) {
+        positions.set(id, { x, y });
+        const children = getVisibleChildren(id);
+        if (!children.length) return;
+        const childWidths = children.map(c => getSubtreeWidth(c.id));
+        const totalWidth = childWidths.reduce((a, b) => a + b, 0) + (children.length - 1) * H_GAP;
+        let startX = x + NODE_W / 2 - totalWidth / 2;
+        children.forEach((child, i) => {
+          const cw = childWidths[i];
+          const cx = startX + cw / 2 - NODE_W / 2;
+          positionNode(child.id, cx, y + NODE_H + V_GAP);
+          startX += cw + H_GAP;
+        });
+      }
+
+      // Layout each root
+      let totalRootWidth = 0;
+      const rootWidths = roots.map(r => getSubtreeWidth(r.id));
+      totalRootWidth = rootWidths.reduce((a, b) => a + b, 0) + (roots.length - 1) * H_GAP * 2;
+
+      let startX = 0;
+      roots.forEach((root, i) => {
+        const rw = rootWidths[i];
+        const rx = startX + rw / 2 - NODE_W / 2;
+        positionNode(root.id, rx, 0);
+        startX += rw + H_GAP * 2;
+      });
+
+      let maxX = 0, maxY = 0;
+      positions.forEach(p => { maxX = Math.max(maxX, p.x + NODE_W); maxY = Math.max(maxY, p.y + NODE_H); });
+      return { positions, width: maxX, height: maxY };
+    }
+
+    function renderTree() {
+      const holder = document.getElementById('orgChart');
+      const svgEl = document.getElementById('treeConnectors');
+      holder.innerHTML = '';
+      svgEl.innerHTML = '';
+
+      if (!filteredEmployees.length) return;
+
+      const { positions, width, height } = layoutTree();
+      if (!positions.size) return;
+
+      const pad = 40;
+      holder.style.width = (width + pad * 2) + 'px';
+      holder.style.height = (height + pad * 2) + 'px';
+      svgEl.style.width = (width + pad * 2) + 'px';
+      svgEl.style.height = (height + pad * 2) + 'px';
+
+      // Render connectors
+      let paths = '';
+      positions.forEach((pos, id) => {
+        const children = getVisibleChildren(id);
+        children.forEach(child => {
+          const cPos = positions.get(child.id);
+          if (!cPos) return;
+          const x1 = pos.x + pad + NODE_W / 2;
+          const y1 = pos.y + pad + NODE_H;
+          const x2 = cPos.x + pad + NODE_W / 2;
+          const y2 = cPos.y + pad;
+          const midY = y1 + (y2 - y1) / 2;
+          const isHighlighted = highlightedChain.has(id) && highlightedChain.has(child.id);
+          paths += `<path d="M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}" class="${isHighlighted ? 'highlight' : ''}" />`;
+        });
+      });
+      svgEl.innerHTML = paths;
+
+      // Render nodes
+      positions.forEach((pos, id) => {
+        const emp = employeeMap.get(id);
+        if (!emp) return;
+        const deptColor = getDeptColor(emp.department);
+        const hasChildren = (childrenMap.get(id) || []).filter(cid => filteredEmployees.includes(employeeMap.get(cid))).length > 0;
+        const isCollapsed = collapsedNodes.has(id);
+        const isSelected = selectedEmployee && selectedEmployee.id === id;
+        const isHighlighted = highlightedChain.has(id);
+
+        const node = document.createElement('div');
+        node.className = 'tree-node' + (isSelected ? ' selected' : '') + (isHighlighted ? ' highlighted' : '');
+        node.style.left = (pos.x + pad) + 'px';
+        node.style.top = (pos.y + pad) + 'px';
+        node.style.borderLeftColor = deptColor + '60';
+        node.style.borderLeftWidth = '3px';
+        node.dataset.id = emp.id;
+
+        node.innerHTML = `
+          <div class="tree-node-head">
+            <div class="tree-node-avatar" style="background:linear-gradient(135deg,${deptColor},${deptColor}88)">${esc(initials(emp.name))}</div>
+            <div style="min-width:0;flex:1">
+              <div class="tree-node-name">${esc(emp.name)}</div>
+              <div class="tree-node-title">${esc(emp.jobTitle)}</div>
+            </div>
+          </div>
+          <div class="tree-node-dept"><span class="dept-dot" style="background:${deptColor}"></span>${esc(emp.department)}</div>
+          ${hasChildren ? `<div class="tree-toggle">${isCollapsed ? '+' : '\u2212'}</div>` : ''}
+        `;
+
+        node.addEventListener('click', (e) => {
+          if (e.target.closest('.tree-toggle')) {
+            if (isCollapsed) collapsedNodes.delete(id); else collapsedNodes.add(id);
+            renderTree();
+            return;
+          }
+          selectEmployee(emp);
+        });
+
+        holder.appendChild(node);
+      });
+
+      applyTreeTransform();
+    }
+
+    // ─── Tree Viewport ───
+    function applyTreeTransform() {
+      const holder = document.getElementById('orgChart');
+      const svg = document.getElementById('treeConnectors');
+      const t = `translate(${treePan.x}px, ${treePan.y}px) scale(${treePan.scale})`;
+      holder.style.transform = t;
+      svg.style.transform = t;
+      svg.style.transformOrigin = '0 0';
+      document.getElementById('scaleBadge').textContent = Math.round(treePan.scale * 100) + '%';
+    }
+
+    function fitTree() {
+      const holder = document.getElementById('orgChart');
+      const stage = document.getElementById('treeStage');
+      if (!holder || !stage) return;
+      const cW = parseInt(holder.style.width) || 800;
+      const cH = parseInt(holder.style.height) || 600;
+      const sW = stage.clientWidth;
+      const sH = stage.clientHeight;
+      const scaleX = (sW - 60) / cW;
+      const scaleY = (sH - 80) / cH;
+      treePan.scale = Math.max(0.3, Math.min(1, Math.min(scaleX, scaleY)));
+      treePan.x = (sW - cW * treePan.scale) / 2;
+      treePan.y = Math.max(20, (sH - cH * treePan.scale) / 2);
+      applyTreeTransform();
+    }
+
+    function centerOnNode(emp) {
+      const stage = document.getElementById('treeStage');
+      const node = document.querySelector(`.tree-node[data-id="${CSS.escape(emp.id)}"]`);
+      if (!node || !stage) return;
+      const nodeX = node.offsetLeft + NODE_W / 2;
+      const nodeY = node.offsetTop + NODE_H / 2;
+      treePan.x = stage.clientWidth / 2 - nodeX * treePan.scale;
+      treePan.y = stage.clientHeight / 2 - nodeY * treePan.scale;
+      applyTreeTransform();
+    }
+
+    function setupTreeInteractions() {
+      const stage = document.getElementById('treeStage');
+      if (!stage || stage.dataset.bound === '1') return;
+      stage.dataset.bound = '1';
+      let dragging = false, startX = 0, startY = 0, originX = 0, originY = 0;
+
+      stage.addEventListener('mousedown', e => {
+        if (e.target.closest('.tree-node, .tree-toggle')) return;
+        dragging = true; startX = e.clientX; startY = e.clientY;
+        originX = treePan.x; originY = treePan.y;
+        stage.classList.add('dragging');
+      });
+      window.addEventListener('mousemove', e => {
+        if (!dragging) return;
+        treePan.x = originX + (e.clientX - startX);
+        treePan.y = originY + (e.clientY - startY);
+        applyTreeTransform();
+      });
+      window.addEventListener('mouseup', () => { dragging = false; stage.classList.remove('dragging'); });
+      stage.addEventListener('wheel', e => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.08 : 0.92;
+        treePan.scale = Math.max(0.3, Math.min(2, treePan.scale * factor));
+        applyTreeTransform();
+      }, { passive: false });
+    }
+
+    // ─── Expand to Node ───
+    function expandToNode(emp) {
+      let cur = emp;
+      while (cur.managerId && employeeMap.has(cur.managerId)) {
+        collapsedNodes.delete(cur.managerId);
+        cur = employeeMap.get(cur.managerId);
+      }
+    }
+
+    // ─── Selection ───
+    function selectEmployee(emp) {
+      selectedEmployee = emp;
+      highlightedChain = new Set();
+      const path = getOrgPath(emp);
+      path.forEach(p => highlightedChain.add(p.id));
+      if (currentView === 'tree') renderTree();
+      else renderCards();
+      openPanel(emp);
+    }
+
+    // ─── Search ───
+    function handleSearch() {
+      applyFilters();
+      if (searchQuery.trim() && filteredEmployees.length > 0) {
+        const match = filteredEmployees[0];
+        if (currentView === 'tree') {
+          expandToNode(match);
+          selectedEmployee = match;
+          highlightedChain = new Set(getOrgPath(match).map(e => e.id));
+          renderTree();
+          setTimeout(() => { centerOnNode(match); openPanel(match); }, 80);
+        } else {
+          selectEmployee(match);
+        }
+      }
+    }
+
+    // ─── Filters ───
+    function applyFilters() {
+      const q = searchQuery.trim().toLowerCase();
+      filteredEmployees = employees.filter(emp => {
+        const deptOk = activeDept === 'all' || emp.department === activeDept;
+        const locOk = activeLocation === 'all' || emp.office === activeLocation;
+        const lvl = Number(emp.level || 1);
+        const levelOk = activeLevel === 'all' || (activeLevel === '1' && lvl === 1) || (activeLevel === '2' && lvl === 2) || (activeLevel === '3' && lvl >= 3);
+        const searchOk = !q || [emp.name, emp.jobTitle, emp.department, emp.email, emp.office, emp.id].join(' ').toLowerCase().includes(q);
+        return deptOk && locOk && levelOk && searchOk;
+      });
+
+      // For tree: include ancestors so hierarchy stays connected
+      if (currentView === 'tree' && (activeDept !== 'all' || activeLocation !== 'all' || activeLevel !== 'all' || q)) {
+        const needed = new Set(filteredEmployees.map(e => e.id));
+        filteredEmployees.forEach(emp => {
+          let cur = emp;
+          while (cur.managerId && employeeMap.has(cur.managerId)) {
+            needed.add(cur.managerId);
+            cur = employeeMap.get(cur.managerId);
+          }
+        });
+        filteredEmployees = employees.filter(e => needed.has(e.id));
+      }
+
+      if (currentView === 'card') renderCards(); else renderTree();
+    }
+
+    // ─── Cards ───
+    function renderCards() {
+      const grid = document.getElementById('cardGrid');
+      grid.innerHTML = '';
+      filteredEmployees.forEach(emp => {
+        const dr = countDirectReports(emp.id);
+        const deptColor = getDeptColor(emp.department);
+        const isSelected = selectedEmployee && selectedEmployee.id === emp.id;
+        const card = document.createElement('div');
+        card.className = 'card' + (isSelected ? ' selected' : '');
+        card.style.borderLeftColor = deptColor + '50';
+        card.innerHTML = `
+          <div class="card-head">
+            <div class="person">
+              <div class="avatar" style="background:linear-gradient(135deg,${deptColor},${deptColor}66)">${esc(initials(emp.name))}</div>
+              <div><div class="name">${esc(emp.name)}</div><div class="title">${esc(emp.jobTitle || '-')}</div></div>
+            </div>
+            <div class="level-badge">L${emp.level}</div>
+          </div>
+          <div class="details">
+            <div class="detail"><i data-lucide="building-2"></i><span>${esc(emp.office || '-')}</span></div>
+            <div class="detail"><i data-lucide="mail"></i><span>${esc(emp.email || '-')}</span></div>
+            <div class="detail"><i data-lucide="phone"></i><span>${esc(emp.phone || '-')}</span></div>
+            <div class="detail"><i data-lucide="id-card"></i><span>${esc(emp.id)}</span></div>
+          </div>
+          <div class="card-foot">
+            <span class="dept-badge" style="background:${deptColor}12;color:${deptColor};border:1px solid ${deptColor}24"><span class="dept-dot" style="background:${deptColor}"></span>${esc(emp.department)}</span>
+            <span class="reports-badge"><i data-lucide="users"></i>${dr}</span>
+          </div>`;
+        card.addEventListener('click', () => selectEmployee(emp));
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    // ─── Detail Panel ───
+    function openPanel(emp) {
+      selectedEmployee = emp;
+      const dc = getDeptColor(emp.department);
+      document.getElementById('panelAvatar').textContent = initials(emp.name);
+      document.getElementById('panelAvatar').style.background = `linear-gradient(135deg,${dc},${dc}66)`;
+      document.getElementById('panelName').textContent = emp.name;
+      document.getElementById('panelTitle').textContent = emp.jobTitle || '-';
+
+      document.getElementById('panelContact').innerHTML = `
+        <div class="info-row"><div class="info-icon"><i data-lucide="mail"></i></div><div><div class="info-label">Email</div><div class="info-value">${emp.email ? `<a href="mailto:${esc(emp.email)}">${esc(emp.email)}</a>` : '-'}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="phone"></i></div><div><div class="info-label">Phone</div><div class="info-value">${esc(emp.phone || '-')}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="map-pin"></i></div><div><div class="info-label">Location</div><div class="info-value">${esc(emp.office || '-')}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="building-2"></i></div><div><div class="info-label">Department</div><div class="info-value">${esc(emp.department)}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="layers-3"></i></div><div><div class="info-label">Level</div><div class="info-value">${emp.level}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="id-card"></i></div><div><div class="info-label">Employee ID</div><div class="info-value">${esc(emp.id)}</div></div></div>
+        <div class="info-row"><div class="info-icon"><i data-lucide="users"></i></div><div><div class="info-label">Team Size</div><div class="info-value">${countTeamBelow(emp.id)} total</div></div></div>`;
+
+      const manager = employeeMap.get(emp.managerId);
+      document.getElementById('panelReportsTo').innerHTML = manager
+        ? `<div class="chain-item" data-id="${esc(manager.id)}"><div class="chain-avatar" style="background:linear-gradient(135deg,${getDeptColor(manager.department)},${getDeptColor(manager.department)}66)">${esc(initials(manager.name))}</div><div><div class="chain-name">${esc(manager.name)}</div><div class="chain-title">${esc(manager.jobTitle)}</div></div></div>`
+        : '<div style="font-size:10px;color:var(--text-4)">Top of organization</div>';
+
+      const directs = employees.filter(e => e.managerId === emp.id);
+      document.getElementById('panelDirectReports').innerHTML = directs.length
+        ? directs.map(d => `<div class="chain-item" data-id="${esc(d.id)}"><div class="chain-avatar" style="background:linear-gradient(135deg,${getDeptColor(d.department)},${getDeptColor(d.department)}66)">${esc(initials(d.name))}</div><div><div class="chain-name">${esc(d.name)}</div><div class="chain-title">${esc(d.jobTitle)}</div></div></div>`).join('')
+        : '<div style="font-size:10px;color:var(--text-4)">No direct reports</div>';
+
+      // Organization Path
+      const orgPath = getOrgPath(emp);
+      document.getElementById('panelOrgPath').innerHTML = orgPath.map((p, i) =>
+        `${i > 0 ? '<span class="org-path-sep">\u203A</span>' : ''}<span class="org-path-item${p.id === emp.id ? ' current' : ''}" data-id="${esc(p.id)}">${esc(p.name)}</span>`
+      ).join('');
+
+      // Wire click events on chain items
+      document.querySelectorAll('#panel .chain-item[data-id], #panel .org-path-item[data-id]').forEach(el => {
+        el.addEventListener('click', () => {
+          const target = employeeMap.get(el.dataset.id);
+          if (target) { if (currentView === 'tree') { expandToNode(target); } selectEmployee(target); }
+        });
+      });
+
+      document.getElementById('panel').classList.add('open');
+      document.getElementById('panelOverlay').classList.add('open');
+      lucide.createIcons();
+    }
+
+    function closePanel() {
+      document.getElementById('panel').classList.remove('open');
+      document.getElementById('panelOverlay').classList.remove('open');
+    }
+
+    // ─── View Switching ───
+    function switchView(view) {
+      currentView = view;
+      document.getElementById('cardView').classList.toggle('active', view === 'card');
+      document.getElementById('treeView').classList.toggle('active', view === 'tree');
+      document.getElementById('btnCard').classList.toggle('active', view === 'card');
+      document.getElementById('btnTree').classList.toggle('active', view === 'tree');
+      applyFilters();
+      if (view === 'tree') { setTimeout(fitTree, 50); }
+    }
+
+    // ─── Stats ───
+    function updateStats() {
+      document.getElementById('statTotal').textContent = employees.length;
+      document.getElementById('statDepts').textContent = new Set(employees.map(e => e.department).filter(Boolean)).size;
+      document.getElementById('statLocs').textContent = new Set(employees.map(e => e.office).filter(Boolean)).size;
+      document.getElementById('statLevels').textContent = new Set(employees.map(e => e.level)).size;
+    }
+
+    // ─── Custom Dropdowns ───
+    function buildDropdowns() {
+      const depts = [...new Set(employees.map(e => e.department).filter(Boolean))].sort();
+      const locs = [...new Set(employees.map(e => e.office).filter(Boolean))].sort();
+
+      buildDropdown('dept', [{ value: 'all', label: 'All Departments' }, ...depts.map(d => ({ value: d, label: d, color: getDeptColor(d) }))], activeDept, val => { activeDept = val; applyFilters(); });
+      buildDropdown('loc', [{ value: 'all', label: 'All Locations' }, ...locs.map(l => ({ value: l, label: l }))], activeLocation, val => { activeLocation = val; applyFilters(); });
+      buildDropdown('level', [{ value: 'all', label: 'All Levels' }, { value: '1', label: 'Level 1 - C-Suite' }, { value: '2', label: 'Level 2 - Directors' }, { value: '3', label: 'Level 3+' }], activeLevel, val => { activeLevel = val; applyFilters(); });
+    }
+
+    function buildDropdown(prefix, options, activeVal, onChange) {
+      const trigger = document.getElementById(prefix + 'Trigger');
+      const menu = document.getElementById(prefix + 'Menu');
+      const activeOpt = options.find(o => o.value === activeVal) || options[0];
+      trigger.textContent = activeOpt.label;
+
+      menu.innerHTML = options.map(o => `
+        <div class="dropdown-option${o.value === activeVal ? ' active' : ''}" data-value="${esc(o.value)}">
+          ${o.color ? `<span class="dropdown-dot" style="background:${o.color}"></span>` : ''}
+          ${esc(o.label)}
+        </div>
+      `).join('');
+
+      trigger.onclick = (e) => {
+        e.stopPropagation();
+        closeAllDropdowns();
+        trigger.classList.add('open');
+        menu.classList.add('open');
+      };
+
+      menu.querySelectorAll('.dropdown-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const val = opt.dataset.value;
+          trigger.textContent = options.find(o => o.value === val).label;
+          trigger.classList.remove('open');
+          menu.classList.remove('open');
+          menu.querySelectorAll('.dropdown-option').forEach(o => o.classList.toggle('active', o.dataset.value === val));
+          onChange(val);
+        });
+      });
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.dropdown-trigger').forEach(t => t.classList.remove('open'));
+      document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+    }
+
+    // ─── Legend ───
+    function buildLegend() {
+      const depts = [...new Set(employees.map(e => e.department).filter(Boolean))].sort();
+      const legend = document.getElementById('treeLegend');
+      legend.innerHTML = `<div class="tree-legend-title">Departments</div>` +
+        depts.map(d => `<div class="tree-legend-item"><span class="tree-legend-swatch" style="background:${getDeptColor(d)}"></span><span>${esc(d)}</span></div>`).join('');
+    }
+
+    // ─── Utilities ───
+    function esc(v) { return String(v || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function initials(name) { return String(name || '').replace(/[^A-Za-z0-9 ]+/g, ' ').split(/\s+/).filter(Boolean).map(n => n[0]).join('').slice(0, 2).toUpperCase() || '--'; }
+
+    // ─── Init ───
+    async function init() {
+      try {
+        employees = await fetchEmployees();
+        if (!employees.length) throw new Error('No employees');
+        buildHierarchy(employees);
+        filteredEmployees = [...employees];
+        updateStats();
+        buildDropdowns();
+        buildLegend();
+        setupTreeInteractions();
+        applyFilters();
+        setTimeout(fitTree, 100);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        document.getElementById('loading').classList.add('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    // ─── Event Listeners ───
+    document.getElementById('btnTree').addEventListener('click', () => switchView('tree'));
+    document.getElementById('btnCard').addEventListener('click', () => switchView('card'));
+    document.getElementById('btnClear').addEventListener('click', () => {
+      searchQuery = ''; activeDept = 'all'; activeLocation = 'all'; activeLevel = 'all';
+      document.getElementById('searchInput').value = '';
+      highlightedChain = new Set();
+      collapsedNodes = new Set();
+      buildDropdowns();
+      closePanel();
+      applyFilters();
+      if (currentView === 'tree') setTimeout(fitTree, 50);
+    });
+
+    document.getElementById('searchInput').addEventListener('input', e => { searchQuery = e.target.value || ''; handleSearch(); });
+    document.getElementById('btnZoomOut').addEventListener('click', () => { treePan.scale = Math.max(0.3, treePan.scale * 0.9); applyTreeTransform(); });
+    document.getElementById('btnZoomIn').addEventListener('click', () => { treePan.scale = Math.min(2, treePan.scale * 1.1); applyTreeTransform(); });
+    document.getElementById('btnFit').addEventListener('click', fitTree);
+    document.getElementById('btnExpand').addEventListener('click', () => { collapsedNodes.clear(); renderTree(); setTimeout(fitTree, 50); });
+    document.getElementById('btnCollapse').addEventListener('click', () => {
+      employees.forEach(e => { if ((childrenMap.get(e.id) || []).length > 0) collapsedNodes.add(e.id); });
+      renderTree(); setTimeout(fitTree, 50);
+    });
+    document.getElementById('btnLegend').addEventListener('click', () => {
+      legendOpen = !legendOpen;
+      document.getElementById('treeLegend').classList.toggle('open', legendOpen);
+      document.getElementById('btnLegend').classList.toggle('active', legendOpen);
+    });
+    document.getElementById('btnRefresh').addEventListener('click', async () => {
+      const btn = document.getElementById('btnRefresh');
+      btn.classList.add('spinning');
+      await init();
+      setTimeout(() => btn.classList.remove('spinning'), 600);
+    });
+    document.getElementById('panelClose').addEventListener('click', closePanel);
+    document.getElementById('panelOverlay').addEventListener('click', closePanel);
+    document.addEventListener('click', e => { if (!e.target.closest('.dropdown-wrap')) closeAllDropdowns(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closePanel(); closeAllDropdowns(); }
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+    });
+    window.addEventListener('resize', () => { if (currentView === 'tree') fitTree(); });
+
+    init();
+  </script>
+</body>
+</html>

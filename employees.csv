@@ -1,0 +1,51 @@
+Title,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
+CEO - Group,E001,Chief Executive Officer,Executive,ceo@company.com,+49 711 555 0100,HQ - Germany,,https://example.com/photos/e001.jpg
+COO - Operations,E002,Chief Operating Officer,Operations,coo@company.com,+49 711 555 0101,HQ - Germany,E001,https://example.com/photos/e002.jpg
+CFO - Finance,E003,Chief Financial Officer,Finance,cfo@company.com,+49 711 555 0102,HQ - Germany,E001,https://example.com/photos/e003.jpg
+CHRO - People,E004,Chief Human Resources Officer,HR,chro@company.com,+49 711 555 0103,HQ - Germany,E001,https://example.com/photos/e004.jpg
+CTO - Technology,E005,Chief Technology Officer,IT,cto@company.com,+49 711 555 0104,HQ - Germany,E001,https://example.com/photos/e005.jpg
+VP Manufacturing,E006,Vice President Manufacturing,Operations,vp.manufacturing@company.com,+49 711 555 0105,Plant - Germany,E002,https://example.com/photos/e006.jpg
+VP Supply Chain,E007,Vice President Supply Chain,Operations,vp.supplychain@company.com,+49 711 555 0106,HQ - Germany,E002,https://example.com/photos/e007.jpg
+VP Quality,E008,Vice President Quality,Quality,vp.quality@company.com,+49 711 555 0107,Plant - Germany,E002,https://example.com/photos/e008.jpg
+Finance Director EMEA,E009,Finance Director EMEA,Finance,finance.emea@company.com,+49 711 555 0108,HQ - Germany,E003,https://example.com/photos/e009.jpg
+Controller Director,E010,Director Controlling,Finance,controller@company.com,+49 711 555 0109,HQ - Germany,E003,https://example.com/photos/e010.jpg
+HR Director,E011,HR Director,HR,hr.director@company.com,+49 711 555 0110,HQ - Germany,E004,https://example.com/photos/e011.jpg
+Talent Acquisition Lead,E012,Talent Acquisition Lead,HR,talent@company.com,+49 711 555 0111,HQ - Germany,E004,https://example.com/photos/e012.jpg
+IT Infrastructure Director,E013,Director Infrastructure,IT,infra.director@company.com,+49 711 555 0112,HQ - Germany,E005,https://example.com/photos/e013.jpg
+Applications Director,E014,Director Business Applications,IT,apps.director@company.com,+49 711 555 0113,HQ - Germany,E005,https://example.com/photos/e014.jpg
+Plant Manager A,E015,Plant Manager,Operations,plant.a@company.com,+49 711 555 0114,Plant A,E006,https://example.com/photos/e015.jpg
+Plant Manager B,E016,Plant Manager,Operations,plant.b@company.com,+49 711 555 0115,Plant B,E006,https://example.com/photos/e016.jpg
+Production Supervisor A1,E017,Production Supervisor,Operations,prod.a1@company.com,+49 711 555 0116,Plant A,E015,https://example.com/photos/e017.jpg
+Production Supervisor A2,E018,Production Supervisor,Operations,prod.a2@company.com,+49 711 555 0117,Plant A,E015,https://example.com/photos/e018.jpg
+Production Supervisor B1,E019,Production Supervisor,Operations,prod.b1@company.com,+49 711 555 0118,Plant B,E016,https://example.com/photos/e019.jpg
+Production Supervisor B2,E020,Production Supervisor,Operations,prod.b2@company.com,+49 711 555 0119,Plant B,E016,https://example.com/photos/e020.jpg
+Supply Chain Director,E021,Supply Chain Director,Operations,sc.director@company.com,+49 711 555 0120,HQ - Germany,E007,https://example.com/photos/e021.jpg
+Logistics Manager,E022,Logistics Manager,Operations,logistics@company.com,+49 711 555 0121,Warehouse - Germany,E021,https://example.com/photos/e022.jpg
+Procurement Manager,E023,Procurement Manager,Operations,procurement@company.com,+49 711 555 0122,HQ - Germany,E021,https://example.com/photos/e023.jpg
+Warehouse Supervisor,E024,Warehouse Supervisor,Operations,warehouse.sup@company.com,+49 711 555 0123,Warehouse - Germany,E022,https://example.com/photos/e024.jpg
+Quality Director,E025,Quality Director,Quality,quality.director@company.com,+49 711 555 0124,Plant - Germany,E008,https://example.com/photos/e025.jpg
+Quality Manager Plant A,E026,Quality Manager,Quality,qa.planta@company.com,+49 711 555 0125,Plant A,E025,https://example.com/photos/e026.jpg
+Quality Manager Plant B,E027,Quality Manager,Quality,qa.plantb@company.com,+49 711 555 0126,Plant B,E025,https://example.com/photos/e027.jpg
+Senior Financial Analyst,E028,Senior Financial Analyst,Finance,fin.analyst1@company.com,+49 711 555 0127,HQ - Germany,E009,https://example.com/photos/e028.jpg
+Regional Controller,E029,Regional Controller,Finance,regional.controller@company.com,+49 711 555 0128,France Office,E010,https://example.com/photos/e029.jpg
+Accounts Payable Lead,E030,Accounts Payable Lead,Finance,ap.lead@company.com,+49 711 555 0129,HQ - Germany,E010,https://example.com/photos/e030.jpg
+HR Business Partner Ops,E031,HR Business Partner,HR,hrbp.ops@company.com,+49 711 555 0130,Plant A,E011,https://example.com/photos/e031.jpg
+HR Business Partner Corp,E032,HR Business Partner,HR,hrbp.corp@company.com,+49 711 555 0131,HQ - Germany,E011,https://example.com/photos/e032.jpg
+Recruiter 1,E033,Recruiter,HR,recruiter1@company.com,+49 711 555 0132,HQ - Germany,E012,https://example.com/photos/e033.jpg
+Recruiter 2,E034,Recruiter,HR,recruiter2@company.com,+49 711 555 0133,Poland Office,E012,https://example.com/photos/e034.jpg
+Infrastructure Manager,E035,Infrastructure Manager,IT,infra.manager@company.com,+49 711 555 0134,HQ - Germany,E013,https://example.com/photos/e035.jpg
+Security Lead,E036,IT Security Lead,IT,security.lead@company.com,+49 711 555 0135,HQ - Germany,E013,https://example.com/photos/e036.jpg
+ERP Manager,E037,ERP Manager,IT,erp.manager@company.com,+49 711 555 0136,HQ - Germany,E014,https://example.com/photos/e037.jpg
+CRM Manager,E038,CRM Manager,IT,crm.manager@company.com,+49 711 555 0137,USA Office,E014,https://example.com/photos/e038.jpg
+Assembly Operator A1,E039,Assembly Operator,Operations,assembly.a1@company.com,+49 711 555 0138,Plant A,E017,
+Assembly Operator A2,E040,Assembly Operator,Operations,assembly.a2@company.com,+49 711 555 0139,Plant A,E017,
+Assembly Operator B1,E041,Assembly Operator,Operations,assembly.b1@company.com,+49 711 555 0140,Plant B,E019,
+Assembly Operator B2,E042,Assembly Operator,Operations,assembly.b2@company.com,+49 711 555 0141,Plant B,E020,
+Forklift Operator,E043,Forklift Operator,Operations,forklift@company.com,+49 711 555 0142,Warehouse - Germany,E024,
+Quality Engineer A,E044,Quality Engineer,Quality,qe.a@company.com,+49 711 555 0143,Plant A,E026,https://example.com/photos/e044.jpg
+Quality Engineer B,E045,Quality Engineer,Quality,qe.b@company.com,+49 711 555 0144,Plant B,E027,https://example.com/photos/e045.jpg
+AP Specialist,E046,Accounts Payable Specialist,Finance,ap.specialist@company.com,+49 711 555 0145,HQ - Germany,E030,
+FP&A Analyst,E047,FP&A Analyst,Finance,fpa.analyst@company.com,+49 711 555 0146,HQ - Germany,E028,https://example.com/photos/e047.jpg
+Systems Administrator,E048,Systems Administrator,IT,sysadmin@company.com,+49 711 555 0147,HQ - Germany,E035,https://example.com/photos/e048.jpg
+Security Analyst,E049,Security Analyst,IT,security.analyst@company.com,+49 711 555 0148,HQ - Germany,E036,https://example.com/photos/e049.jpg
+Recruiting Coordinator,E050,Recruiting Coordinator,HR,recruiting.coordinator@company.com,+49 711 555 0149,HQ - Germany,E033,
