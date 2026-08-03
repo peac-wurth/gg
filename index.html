@@ -356,7 +356,7 @@
     const CSV_URL = './employees.csv';
 
     // Full 50-employee dataset embedded as fallback
-    const INLINE_CSV = `Title,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
+    const INLINE_CSV = `EmployeeName,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
 CEO - Group,E001,Chief Executive Officer,Executive,ceo@company.com,+49 711 555 0100,HQ - Germany,,
 COO - Operations,E002,Chief Operating Officer,Operations,coo@company.com,+49 711 555 0101,HQ - Germany,E001,
 CFO - Finance,E003,Chief Financial Officer,Finance,cfo@company.com,+49 711 555 0102,HQ - Germany,E001,
@@ -476,7 +476,7 @@ Recruiting Coordinator,E050,Recruiting Coordinator,HR,recruiting.coordinator@com
       const rows = parseCsv(text);
       const mapped = rows.map(r => ({
         id: r.EmployeeID || '',
-        name: r.Title || 'Unknown',
+        name: r.EmployeeName || 'Unknown',
         jobTitle: r.JobTitle || '',
         department: r.Department || 'General',
         email: r.Email || '',
