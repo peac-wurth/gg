@@ -771,7 +771,7 @@ Recruiting Coordinator,E050,Recruiting Coordinator,HR,recruiting.coordinator@com
         const deptOk = activeDept === 'all' || emp.department === activeDept;
         const locOk = activeLocation === 'all' || emp.office === activeLocation;
         const lvl = Number(emp.level || 1);
-        const levelOk = activeLevel === 'all' || (activeLevel === '1' && lvl === 1) || (activeLevel === '2' && lvl === 2) || (activeLevel === '3' && lvl >= 3);
+        const levelOk = activeLevel === 'all' || String(lvl) === activeLevel;
         const searchOk = !q || [emp.name, emp.jobTitle, emp.department, emp.email, emp.office, emp.id].join(' ').toLowerCase().includes(q);
         return deptOk && locOk && levelOk && searchOk;
       });
@@ -905,8 +905,19 @@ Recruiting Coordinator,E050,Recruiting Coordinator,HR,recruiting.coordinator@com
 
       buildDropdown('dept', [{ value: 'all', label: 'All Departments' }, ...depts.map(d => ({ value: d, label: d, color: getDeptColor(d) }))], activeDept, val => { activeDept = val; applyFilters(); });
       buildDropdown('loc', [{ value: 'all', label: 'All Locations' }, ...locs.map(l => ({ value: l, label: l }))], activeLocation, val => { activeLocation = val; applyFilters(); });
-      buildDropdown('level', [{ value: 'all', label: 'All Levels' }, { value: '1', label: 'L1 · C-Suite' }, { value: '2', label: 'L2 · Directors' }, { value: '3', label: 'L3+ · Staff' }], activeLevel, val => { activeLevel = val; applyFilters(); });
-    }
+     const levels = [...new Set(employees.map(e => e.level))]
+  .sort((a, b) => a - b);
+
+buildDropdown(
+  'level',
+  [
+    { value: 'all', label: 'All Levels' },
+    ...levels.map(level => ({ value: String(level), label: `L${level}` }))
+  ],
+  activeLevel,
+  val => { activeLevel = val; applyFilters(); }
+);
+
 
     function buildDropdown(prefix, options, activeVal, onChange) {
       const trigger = document.getElementById(prefix + 'Trigger');
