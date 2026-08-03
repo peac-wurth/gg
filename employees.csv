@@ -1,4 +1,4 @@
-Title,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
+EmployeeName,EmployeeID,JobTitle,Department,Email,Phone,OfficeLocation,ManagerID,PhotoUrl
 CEO - Group,E001,Chief Executive Officer,Executive,ceo@company.com,+49 711 555 0100,HQ - Germany,,https://example.com/photos/e001.jpg
 COO - Operations,E002,Chief Operating Officer,Operations,coo@company.com,+49 711 555 0101,HQ - Germany,E001,https://example.com/photos/e002.jpg
 CFO - Finance,E003,Chief Financial Officer,Finance,cfo@company.com,+49 711 555 0102,HQ - Germany,E001,https://example.com/photos/e003.jpg
